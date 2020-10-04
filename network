@@ -1,0 +1,27 @@
+import random
+import math
+import networkx as nx
+from agent import Agent
+
+sentences = ["hi", "my", "name", "Catherine"]
+
+class Network:
+    def __init__(self, n, k, p, log=False):
+        self.instantiateAgents(n, k, p)
+        self.stories = dict()
+        self.printLog = log
+
+    def instantiateAgents(self, n, k, p):
+        self.G = nx.newman_watts_strogatz_graph(n, k, p)
+        for node in self.G.nodes():
+            agent = Agent(node)
+            self.G.nodes[node]['node'] = agent
+
+    def getRandomNode(self):
+        node = random.choice(self.G.nodes())
+        return node
+
+    def getRandomAgent(self):
+        node = random.choice(self.G.nodes())
+        agent = self.G.nodes[node]['node']
+        return agent
